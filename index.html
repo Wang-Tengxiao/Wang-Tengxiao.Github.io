@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To：小蛋糕</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义颜色 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pink: {
+                            light: '#FFD1DC',
+                            DEFAULT: '#FFB6C1',
+                            dark: '#FF69B4',
+                        },
+                        cute: {
+                            yellow: '#FFFACD',
+                            blue: '#B0E2FF',
+                            green: '#C1FFC1',
+                            purple: '#E6E6FA',
+                        }
+                    },
+                    fontFamily: {
+                        cute: ['"Comic Sans MS"', '"Marker Felt"', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .float-animation {
+                animation: float 3s ease-in-out infinite;
+            }
+            .scale-in {
+                animation: scaleIn 0.8s ease-out forwards;
+            }
+            .fade-in {
+                animation: fadeIn 0.5s ease-out forwards;
+            }
+            .fade-out {
+                animation: fadeOut 0.5s ease-in forwards;
+            }
+            .slide-up {
+                animation: slideUp 0.8s ease-out forwards;
+            }
+            .slide-down {
+                animation: slideDown 0.8s ease-out forwards;
+            }
+            .slide-right {
+                animation: slideRight 0.8s ease-out forwards;
+            }
+            .slide-left {
+                animation: slideLeft 0.8s ease-out forwards;
+            }
+            .stack-appear {
+                animation: stackAppear 0.8s ease-out forwards;
+            }
+            .bg-pattern {
+                background-image: 
+                    url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff99cc' fill-opacity='0.1'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+                    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff69b4' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            }
+            .button-stretch {
+                width: 250px !important;
+                transition: width 1s ease;
+            }
+            .text-box {
+                max-height: 300px;
+                overflow-y: auto;
+                scrollbar-width: thin;
+                scrollbar-color: #FFB6C1 #FFD1DC;
+            }
+            .text-box::-webkit-scrollbar {
+                width: 6px;
+            }
+            .text-box::-webkit-scrollbar-track {
+                background: #FFD1DC;
+                border-radius: 10px;
+            }
+            .text-box::-webkit-scrollbar-thumb {
+                background-color: #FFB6C1;
+                border-radius: 10px;
+            }
+        }
+        
+        /* 动画关键帧 */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        
+        @keyframes scaleIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideRight {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideLeft {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes stackAppear {
+            from { transform: translate(0, 50px) scale(0.9); opacity: 0; }
+            to { transform: translate(0, 0) scale(1); opacity: 1; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="bg-pink-light bg-pattern min-h-screen flex flex-col items-center justify-center overflow-hidden p-4 font-cute">
+    <!-- 开场文字和按钮 -->
+    <div id="opening-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center opacity-0">
+        <div class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-pink-dark text-shadow mb-8 text-center px-4">
+            致 小蛋糕
+        </div>
+        <button id="start-button" class="bg-pink text-white font-bold py-3 px-10 rounded-full shadow-lg hover:bg-pink-dark transition transform hover:scale-105 focus:outline-none text-lg">
+            打开
+        </button>
+    </div>
+    
+    <!-- 新增：可滑动文本框和继续按钮 -->
+    <div id="text-container" class="fixed inset-0 z-40 flex flex-col items-center justify-center p-6 opacity-0 pointer-events-none">
+        <div class="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md slide-up">
+            <!-- 可滑动文本框 -->
+            <div class="text-box mb-6">
+                <p class="text-pink-dark text-4xl mb-4">Dear 小蛋糕：</p>
+                <p class="text-pink-dark text-lg mb-4"></p>
+                <p class="text-pink-dark text-2xl mb-4">今天是三年前我们争吵的开端，那些画面依然清晰得刺眼。转眼三年，我又陪了你整整三年。</p>
+                <p class="text-pink-dark text-lg mb-4"></p>
+                <p class="text-pink-dark text-2xl mb-4">我好想你啊。</p>
+                <p class="text-pink-dark text-lg mb-4"></p>
+                <p class="text-pink-dark text-2xl mb-4">在余下的时光里，我不想继续当那个怯懦的大笨蛋了——所以今天，我想斗胆换一个身份站在你面前。</p>
+                <p class="text-pink-dark text-lg mb-4"></p>
+                <p class="text-pink-dark text-2xl mb-4">纵然没有结果，我也想亲自撞一撞南墙，只为让你听见墙垣震颤的回响。</p>
+
+            </div>
+            
+            <!-- 继续按钮 -->
+            <button id="continue-button" class="bg-pink text-white font-bold py-3 px-10 rounded-full shadow-lg hover:bg-pink-dark transition transform hover:scale-105 focus:outline-none text-lg w-full">
+                继续
+            </button>
+        </div>
+    </div>
+    
+    <!-- 背景音乐 -->
+    <audio id="background-music" loop>
+        <source src="https://gitee.com/TenshoWang/tenshowang/releases/download/7/CJSQL.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- 图片容器 - 确保图片层级正确 -->
+    <div id="images-container" class="relative w-full max-w-md h-[500px] opacity-0 mx-auto my-8">
+        <!-- 第1-5张图片 - 基础层 -->
+        <div class="image-item absolute w-[60%] left-[20%] top-[30%] opacity-0 transform rotate-[-5deg] shadow-xl rounded-xl overflow-hidden z-10">
+            <img src="https://youke1.picui.cn/s1/2025/08/09/68973fbdeb0a5.jpg" alt="自拍" class="w-full h-auto rounded">
+        </div>
+        
+        <div class="image-item absolute w-[65%] left-[5%] top-[25%] opacity-0 transform rotate-[3deg] shadow-xl rounded-xl overflow-hidden z-20">
+            <img src="https://youke1.picui.cn/s1/2025/08/09/68973fc431aa4.jpg" alt="自拍1" class="w-full h-auto rounded">
+        </div>
+        
+        <div class="image-item absolute w-[70%] left-[25%] top-[20%] opacity-0 transform rotate-[-2deg] shadow-xl rounded-xl overflow-hidden z-30">
+            <img src="https://youke1.picui.cn/s1/2025/08/09/68973fbe480ae.jpg" alt="游戏" class="w-full h-auto rounded">
+        </div>
+        
+        <div class="image-item absolute w-[70%] left-[10%] top-[15%] opacity-0 transform rotate-[5deg] shadow-xl rounded-xl overflow-hidden z-40">
+            <img src="https://youke1.picui.cn/s1/2025/08/09/68973fc67349d.jpg" alt="聊天记录" class="w-full h-auto rounded">
+        </div>
+        
+        <div class="image-item absolute w-[75%] left-[15%] top-[40%] opacity-0 transform rotate-[-3deg] shadow-xl rounded-xl overflow-hidden z-50">
+            <img src="https://youke1.picui.cn/s1/2025/08/09/68973fc4dd6e8.jpg" alt="头像" class="w-full h-auto rounded">
+        </div>
+        
+        <!-- 第6-12张图片 - 上层，z-index值显著高于前5张 -->
+        <div class="image-item absolute w-[75%] left-[20%] top-[10%] opacity-0 transform rotate-[2deg] shadow-xl rounded-xl overflow-hidden z-600">
+            <img src="https://youke1.picui.cn/s1/2025/08/09/68973fc96f336.jpg" alt="舜耕" class="w-full h-auto rounded">
+        </div>
+        
+        <div class="image-item absolute w-[80%] left-[5%] top-[35%] opacity-0 transform rotate-[-4deg] shadow-xl rounded-xl overflow-hidden z-700">
+            <img src="https://youke1.picui.cn/s1/2025/08/09/68973fcb5302f.jpg" alt="自拍2" class="w-full h-auto rounded">
+        </div>
+        
+        <div class="image-item absolute w-[80%] left-[15%] top-[5%] opacity-0 transform rotate-[1deg] shadow-xl rounded-xl overflow-hidden z-800">
+            <img src="https://youke1.picui.cn/s1/2025/08/09/68973fcc3494e.jpg" alt="画画1" class="w-full h-auto rounded">
+        </div>
+        
+        <div class="image-item absolute w-[85%] left-[10%] top-[25%] opacity-0 transform rotate-[-1deg] shadow-xl rounded-xl overflow-hidden z-900">
+            <img src="https://youke1.picui.cn/s1/2025/08/09/68973fcbe6be3.jpg" alt="自拍3" class="w-full h-auto rounded">
+        </div>
+        
+        <div class="image-item absolute w-[85%] left-[20%] top-[45%] opacity-0 transform rotate-[4deg] shadow-xl rounded-xl overflow-hidden z-1000">
+            <img src="https://youke1.picui.cn/s1/2025/08/09/68973fcc89d17.jpg" alt="画画2" class="w-full h-auto rounded">
+        </div>
+        
+        <div class="image-item absolute w-[90%] left-[5%] top-[15%] opacity-0 transform rotate-[-2deg] shadow-xl rounded-xl overflow-hidden z-1100">
+            <img src="https://youke1.picui.cn/s1/2025/08/09/68973fbe65fb1.jpg" alt="牵手" class="w-full h-auto rounded">
+        </div>
+        
+        <div class="image-item absolute w-[90%] left-[10%] top-[30%] opacity-0 transform rotate-[3deg] shadow-xl rounded-xl overflow-hidden z-1200">
+            <img src="https://youke1.picui.cn/s1/2025/08/09/68973fc3d7a19.jpg" alt="戒指" class="w-full h-auto rounded">
+        </div>
+    </div>
+    
+    <!-- 最后一行文字和按钮容器 - 完全居中显示 -->
+    <div id="final-container" class="fixed inset-0 z-10 flex flex-col items-center justify-center gap-8 opacity-0 p-4">
+        <!-- 最后一行文字 -->
+        <div id="last-text" class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-pink-dark text-shadow text-center max-w-md">
+            能不能做我女朋友
+        </div>
+        
+        <!-- 按钮容器 -->
+        <div id="buttons-container" class="flex flex-wrap justify-center gap-4 opacity-0">
+            <button id="buttonA" class="bg-pink text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition hover:scale-105 focus:outline-none">
+                可以
+            </button>
+            <button id="buttonB" class="bg-cute-purple text-pink-dark font-bold py-3 px-8 rounded-full shadow-lg transform transition hover:scale-105 focus:outline-none">
+                不可以
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        // 获取DOM元素
+        const openingScreen = document.getElementById('opening-screen');
+        const startButton = document.getElementById('start-button');
+        const textContainer = document.getElementById('text-container');
+        const continueButton = document.getElementById('continue-button');
+        const lastText = document.getElementById('last-text');
+        const finalContainer = document.getElementById('final-container');
+        const buttonsContainer = document.getElementById('buttons-container');
+        const buttonA = document.getElementById('buttonA');
+        const buttonB = document.getElementById('buttonB');
+        const imagesContainer = document.getElementById('images-container');
+        const imageItems = document.querySelectorAll('.image-item');
+        const backgroundMusic = document.getElementById('background-music');
+        const totalImages = imageItems.length;
+        const imageDelay = 1000; // 图片间隔时间
+        let animationStarted = false;
+        
+        // 开始按钮事件
+        startButton.addEventListener('click', () => {
+            if (animationStarted) return;
+            
+            animationStarted = true;
+            
+            // 隐藏开场屏幕
+            openingScreen.classList.add('fade-out');
+            setTimeout(() => {
+                openingScreen.style.display = 'none';
+                // 显示可滑动文本框
+                textContainer.style.opacity = '1';
+                textContainer.style.pointerEvents = 'auto';
+            }, 500);
+            
+            // 播放背景音乐
+            backgroundMusic.play().catch(e => {
+                console.log('播放音乐需要用户交互:', e);
+            });
+        });
+        
+        // 继续按钮事件 - 点击后隐藏文本框，开始显示图片
+        continueButton.addEventListener('click', () => {
+            textContainer.classList.add('fade-out');
+            setTimeout(() => {
+                textContainer.style.display = 'none';
+                // 开始显示图片
+                startImageAnimation();
+            }, 500);
+        });
+        
+        // 按钮交互
+        buttonA.addEventListener('click', () => {
+            // 创建弹窗元素
+            const popup = document.createElement('div');
+            popup.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-2xl shadow-2xl z-50 fade-in max-w-xs w-[80%]';
+            
+            // 弹窗内容容器
+            const popupContent = document.createElement('div');
+            popupContent.className = 'flex flex-col items-center justify-center text-center';
+            
+            // 文字内容
+            const popupText = document.createElement('div');
+            popupText.className = 'text-[clamp(2rem,6vw,4rem)] font-bold text-pink-dark mb-6';
+            popupText.textContent = '我爱你';
+            
+            // 关闭按钮
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'bg-pink text-white px-6 py-3 text-sm rounded-full hover:bg-pink-dark transition w-24';
+            closeBtn.textContent = '关闭';
+            
+            // 组装弹窗
+            popupContent.appendChild(popupText);
+            popupContent.appendChild(closeBtn);
+            popup.appendChild(popupContent);
+            
+            closeBtn.addEventListener('click', () => {
+                popup.classList.remove('fade-in');
+                popup.classList.add('fade-out');
+                setTimeout(() => {
+                    document.body.removeChild(popup);
+                }, 500);
+            });
+            
+            document.body.appendChild(popup);
+        });
+        
+        buttonB.addEventListener('click', () => {
+            // B按钮消失
+            buttonB.classList.add('fade-out');
+            setTimeout(() => {
+                buttonB.style.display = 'none';
+                // 拉长A按钮
+                buttonA.classList.add('button-stretch');
+            }, 500);
+        });
+        
+        // 开始图片动画
+        function startImageAnimation() {
+            imagesContainer.style.opacity = '1';
+            imagesContainer.style.transition = 'opacity 1s ease-out';
+            
+            // 图片从底层到顶层依次出现
+            imageItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.zIndex = 100 + index;
+                    item.classList.add('stack-appear');
+                }, 500 + (index * imageDelay));
+            });
+            
+            // 计算所有图片完全显示的时间点
+            const allImagesShownTime = 500 + (totalImages - 1) * imageDelay;
+            
+            // 所有图片全部出现后消失
+            setTimeout(() => {
+                imageItems.forEach(item => {
+                    item.style.transition = 'opacity 1s ease-in, transform 1s ease-in';
+                    item.style.opacity = '0';
+                    item.style.transform = item.style.transform + ' translate(0, 20px)';
+                });
+                
+                // 隐藏图片容器
+                setTimeout(() => {
+                    imagesContainer.style.opacity = '0';
+                }, 1000);
+            }, allImagesShownTime + 4000); // 图片停留时间
+            
+            // 显示最后一行文字和按钮
+            setTimeout(() => {
+                finalContainer.classList.add('fade-in');
+                finalContainer.style.opacity = '1';
+                lastText.classList.add('float-animation');
+                
+                // 按钮延迟显示
+                setTimeout(() => {
+                    buttonsContainer.classList.add('fade-in');
+                    buttonsContainer.style.opacity = '1';
+                }, 500);
+            }, allImagesShownTime + 4000 + 1000);
+        }
+        
+        // 页面加载完成后显示开场文字和按钮
+        window.addEventListener('load', () => {
+            openingScreen.classList.add('fade-in');
+        });
+    </script>
+</body>
+</html>
